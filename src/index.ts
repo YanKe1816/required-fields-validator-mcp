@@ -58,7 +58,6 @@ const inputSchema = {
       items: {
         type: "string",
       },
-      minItems: 1,
     },
     source_label: {
       type: "string",
