@@ -39,6 +39,7 @@ type Env = {
 const APP_NAME = "Required Fields Validator";
 const APP_SLUG = "required-fields-validator";
 const TOOL_NAME = "validate_required_fields";
+const SUPPORT_EMAIL = "sidcraigau@gmail.com";
 const PROTOCOL_VERSION = "2024-11-05";
 
 const inputSchema = {
@@ -381,7 +382,7 @@ function privacyPage(): string {
       </section>
       <section>
         <h2>Contact</h2>
-        <p>Privacy questions can be sent to <a href="mailto:support@example.com">support@example.com</a>.</p>
+        <p>Privacy questions can be sent to <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a>.</p>
       </section>
       <section>
         <h2>Last updated</h2>
@@ -436,7 +437,7 @@ function termsPage(): string {
       </section>
       <section>
         <h2>Contact</h2>
-        <p>Questions can be sent to <a href="mailto:support@example.com">support@example.com</a>.</p>
+        <p>Questions can be sent to <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a>.</p>
       </section>
       <section>
         <h2>Last updated</h2>
@@ -451,7 +452,7 @@ function supportPage(): string {
     `<h1>Support</h1>
       <section>
         <h2>Support email</h2>
-        <p><a href="mailto:support@example.com">support@example.com</a></p>
+        <p><a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></p>
       </section>
       <section>
         <h2>Contact information requirements</h2>

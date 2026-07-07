@@ -7,6 +7,7 @@ type WorkerModule = {
 
 const app = worker as WorkerModule;
 const baseUrl = "https://required-fields-validator.test";
+const supportEmail = "sidcraigau@gmail.com";
 const env = {
   OPENAI_APPS_CHALLENGE: "challenge-route-test-token",
 };
@@ -81,6 +82,12 @@ for (const path of ["/privacy", "/terms", "/support"]) {
   assert.match(pageBody, /href="\/terms"/);
   assert.match(pageBody, /href="\/support"/);
   assert.doesNotMatch(pageBody, /TODO|lorem ipsum|Coming soon|Multi-App Hub|Sample App|Test App|App2|App3/i);
+  assert.doesNotMatch(pageBody, /support@example\.com/);
+
+  if (path === "/privacy" || path === "/terms" || path === "/support") {
+    assert.match(pageBody, new RegExp(supportEmail.replace(".", "\\.")));
+    assert.match(pageBody, new RegExp(`mailto:${supportEmail.replace(".", "\\.")}`));
+  }
 }
 
 const healthResponse = await request("/health");
