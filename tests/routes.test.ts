@@ -39,6 +39,8 @@ async function rpc(method: string, params?: unknown, id: string | number = "test
 }
 
 function assertToolContentMatchesStructuredContent(call: any): void {
+  assert.equal(call.error, undefined);
+  assert.ok(call.result);
   assert.ok(call.result.structuredContent);
   assert.ok(Array.isArray(call.result.content));
   assert.equal(call.result.content.length, 1);
@@ -148,13 +150,13 @@ const missingFieldCall = await rpc("tools/call", {
       name: "Alice",
       email: "alice@example.com",
     },
-    required_fields: ["name", "email", "phone"],
+    required_fields: ["name", "email", "order_id"],
   },
 });
 assertToolContentMatchesStructuredContent(missingFieldCall);
 assert.equal(missingFieldCall.result.structuredContent.status, "success");
 assert.equal(missingFieldCall.result.structuredContent.is_complete, false);
-assert.deepEqual(missingFieldCall.result.structuredContent.missing_fields, ["phone"]);
+assert.deepEqual(missingFieldCall.result.structuredContent.missing_fields, ["order_id"]);
 
 const allowedApprovalTextCall = await rpc("tools/call", {
   name: "validate_required_fields",
@@ -198,6 +200,10 @@ const emptyInputCall = await rpc("tools/call", {
 });
 assertToolContentMatchesStructuredContent(emptyInputCall);
 assertErrorContract(emptyInputCall, "empty_input", "required_fields");
+assert.equal(
+  emptyInputCall.result.structuredContent.errors[0].message,
+  "required_fields must contain at least one field.",
+);
 
 const outOfScopeCall = await rpc("tools/call", {
   name: "validate_required_fields",

@@ -590,7 +590,7 @@ function validateRequiredFields(argumentsValue: unknown): ValidationResult {
   }
 
   if (requiredFields.length === 0) {
-    return errorResult("empty_input", "required_fields must include at least one field.", "required_fields");
+    return errorResult("empty_input", "required_fields must contain at least one field.", "required_fields");
   }
 
   if (sourceLabel !== undefined && typeof sourceLabel !== "string") {
@@ -706,7 +706,7 @@ async function handleMcp(request: Request): Promise<Response> {
     try {
       return jsonRpcResponse(id, toolCallResult(validateRequiredFields(params.arguments)));
     } catch {
-      return jsonRpcResponse(id, toolCallResult(errorResult("internal_error", "An internal error occurred.")));
+      return jsonRpcResponse(id, toolCallResult(errorResult("internal_error", "Internal validation error.")));
     }
   }
 
